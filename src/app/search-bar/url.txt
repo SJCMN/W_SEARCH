@@ -4,3 +4,6 @@ format=json&
 list=search&
 utf8=1&
 srsearch=space
+
+https://en.wikipedia.org?curid= 
+pageId
