@@ -8,8 +8,8 @@ interface WikipediaResponse {
       title: string;
       snippet: string;
       pageid: number;
-    } [];
-  }
+    }[];
+  };
 }
 
 @Injectable({
@@ -19,17 +19,19 @@ export class WikipediaService {
   constructor(private http: HttpClient) {}
 
   public search(term: string) {
-    return this.http.get<WikipediaResponse>('https://en.wikipedia.org/w/api.php', {
-      params: {
-        action: 'query',
-        format: 'json',
-        list: 'search',
-        utf8: '1',
-        srsearch: term,
-        origin: '*',
-      },
-    }).pipe(
-      pluck('query', 'search')
-    );
+    // http.get() is an observable
+    return this.http
+      .get<WikipediaResponse>('https://en.wikipedia.org/w/api.php', {
+        params: {
+          action: 'query',
+          format: 'json',
+          list: 'search',
+          utf8: '1',
+          srsearch: term,
+          origin: '*',
+        },
+      })
+      // pluck operator
+      .pipe(pluck('query', 'search'));
   }
 }
